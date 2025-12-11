@@ -142,36 +142,39 @@
             opacity: 1;
         }
         .modal-content {
-            width: 90%;
-            height: 85%;
+            /* Note: width/height were removed here as they are now controlled by the parent div class for responsiveness */
             background: white;
             border-radius: 20px;
             overflow: hidden;
             position: relative;
             box-shadow: 0 0 50px rgba(255,255,255,0.2);
+            width: 100%; /* Ensure content fills the new larger parent */
+            height: 100%;
         }
+        /* MODIFICATION: Smaller, internal close button */
         .close-btn {
             position: absolute;
-            top: -20px;
-            right: -20px;
+            top: 15px; /* Position inside the corner */
+            right: 15px; /* Position inside the corner */
             background: #ef4444;
             color: white;
-            width: 50px;
-            height: 50px;
+            width: 36px; /* Smaller size */
+            height: 36px; /* Smaller size */
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 20px; /* Smaller 'x' */
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            border: 4px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            border: 2px solid white; /* Thinner border */
             z-index: 10000;
-            transition: transform 0.2s;
+            transition: transform 0.2s, background-color 0.2s;
         }
         .close-btn:hover {
             transform: scale(1.1) rotate(90deg);
+            background-color: #c53929;
         }
         iframe {
             width: 100%;
@@ -223,7 +226,8 @@
         </div>
     </main>
     <div id="game-modal">
-        <div class="relative w-[90%] h-[85%] max-w-6xl">
+        <!-- MODIFICATION: Increased size to w-[95%] h-[95%] -->
+        <div class="relative w-[95%] h-[95%]">
             <button class="close-btn" onclick="closeGameModal()">✕</button>
             <div class="modal-content">
                 <iframe id="game-iframe" src=""></iframe>
