@@ -7,29 +7,25 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
-    
     <style>
-        /* Ocultar scrollbar pero permitir scroll */
         html {
-            scrollbar-width: none; /* Firefox */
+            scrollbar-width: none;
         }
         body {
             font-family: 'Lobster', cursive;
             background-color: #4c1d95;
-            background-image: 
+            background-image:
                 radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
                 radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
                 radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px);
             background-size: 550px 550px, 350px 350px, 250px 250px;
             background-position: 0 0, 40px 60px, 130px 270px;
-            overflow-x: hidden; 
-            -ms-overflow-style: none;  /* IE and Edge */
+            overflow-x: hidden;
+            -ms-overflow-style: none;
         }
         body::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera */
+            display: none;
         }
-
-        /* --- Snow Animation --- */
         .snowflake {
             position: fixed;
             top: -10px;
@@ -40,12 +36,9 @@
             z-index: 0;
             pointer-events: none;
         }
-
         @keyframes fall {
             to { transform: translateY(100vh); }
         }
-
-        /* --- Cards --- */
         .bg-card-blue { background-color: #4285f4; }
         .bg-card-green { background-color: #0f9d58; }
         .bg-card-red { background-color: #db4437; }
@@ -53,7 +46,6 @@
         .bg-card-purple { background-color: #ab47bc; }
         .bg-card-teal { background-color: #00acc1; }
         .bg-card-locked { background-color: #475569; }
-
         .card-hover-effect {
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
@@ -62,45 +54,38 @@
             z-index: 10;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
         }
-
         .text-shadow {
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
-
         .locked-overlay {
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: grayscale(100%);
         }
-
-        /* --- Countdown Style (Updated) --- */
         .countdown-container {
             position: fixed;
             top: 20px;
             left: 20px;
             z-index: 50;
-            background-color: #ef4444; 
-            border-radius: 15px; /* Menos redondeado para ser más compacto */
-            padding: 8px 15px;   /* Más pequeño */
+            background-color: #ef4444;
+            border-radius: 15px;
+            padding: 8px 15px;
             display: flex;
-            gap: 10px;           /* Menos espacio entre items */
+            gap: 10px;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
             border: 2px solid rgba(255,255,255,0.3);
-            font-family: 'Lobster', cursive; /* Fuente cambiada */
-            transform: none; /* Recto */
+            font-family: 'Lobster', cursive;
+            transform: none;
         }
-
         .countdown-item {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-
         .countdown-number {
-            font-size: 1.2rem; /* Más pequeño */
+            font-size: 1.2rem;
             color: white;
             line-height: 1;
         }
-
         .countdown-label {
             font-size: 0.6rem;
             color: rgba(255,255,255,0.9);
@@ -108,15 +93,12 @@
             letter-spacing: 1px;
             margin-top: 2px;
         }
-
         .countdown-separator {
             width: 1px;
             background-color: rgba(255,255,255,0.3);
             height: 25px;
             align-self: center;
         }
-
-        /* --- Audio Button --- */
         #start-audio-btn {
             position: fixed;
             bottom: 20px;
@@ -143,8 +125,6 @@
             40% {transform: translateY(-10px);}
             60% {transform: translateY(-5px);}
         }
-        
-        /* --- Game Modal --- */
         #game-modal {
             display: none;
             position: fixed;
@@ -157,12 +137,10 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        
         #game-modal.active {
             display: flex;
             opacity: 1;
         }
-
         .modal-content {
             width: 90%;
             height: 85%;
@@ -172,7 +150,6 @@
             position: relative;
             box-shadow: 0 0 50px rgba(255,255,255,0.2);
         }
-
         .close-btn {
             position: absolute;
             top: -20px;
@@ -196,16 +173,12 @@
         .close-btn:hover {
             transform: scale(1.1) rotate(90deg);
         }
-
         iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
-
         .hidden { display: none !important; }
-
-        /* Responsive adjustments */
         @media (max-width: 768px) {
             .countdown-container {
                 position: relative;
@@ -218,11 +191,7 @@
     </style>
 </head>
 <body class="min-h-screen py-10 px-4">
-
-    <!-- Snow container -->
     <div id="snow-container"></div>
-
-    <!-- Countdown Timer -->
     <div class="countdown-container">
         <div class="countdown-item">
             <span class="countdown-number" id="days">00</span>
@@ -244,23 +213,15 @@
             <span class="countdown-label">Sec</span>
         </div>
     </div>
-
-    <!-- Audio Button -->
     <button id="start-audio-btn">🔊 Click to Enable Sound</button>
-
-    <!-- Header -->
     <header class="max-w-7xl mx-auto mb-10 text-center text-white relative z-10">
         <h1 class="text-5xl md:text-6xl mb-2 drop-shadow-md">Santa's Village 🎅</h1>
         <p class="text-white/80 text-xl">Advent Calendar: One surprise every day!</p>
     </header>
-
-    <!-- Main Grid -->
     <main class="max-w-[1400px] mx-auto relative z-10">
         <div id="grid-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
         </div>
     </main>
-
-    <!-- Game Modal -->
     <div id="game-modal">
         <div class="relative w-[90%] h-[85%] max-w-6xl">
             <button class="close-btn" onclick="closeGameModal()">✕</button>
@@ -272,18 +233,13 @@
             </div>
         </div>
     </div>
-
     <script>
-        // --- Configurations ---
         const baseUrl = "https://maps.gstatic.com/mapfiles/santatracker/v202502142154/img/card/";
         const targetBaseUrl = "https://santatracker.google.com/";
         const audioBaseUrl = "https://maps.gstatic.com/mapfiles/santatracker/v202502142154/audio/";
-
-        // --- Snow Effect ---
         function createSnow() {
             const container = document.getElementById('snow-container');
             const snowflakeCount = 50;
-            
             for (let i = 0; i < snowflakeCount; i++) {
                 const flake = document.createElement('div');
                 flake.className = 'snowflake';
@@ -297,26 +253,18 @@
             }
         }
         createSnow();
-
-        // --- Countdown Timer ---
         function updateCountdown() {
             const now = new Date();
             const currentYear = now.getFullYear();
-            // Target: Dec 24, 10:00 AM
-            let target = new Date(currentYear, 11, 24, 10, 0, 0); // Month 11 is December
-            
-            // If passed, target next year
+            let target = new Date(currentYear, 11, 24, 10, 0, 0);
             if (now > target) {
                 target = new Date(currentYear + 1, 11, 24, 10, 0, 0);
             }
-
             const diff = target - now;
-
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
             document.getElementById('days').innerText = String(days).padStart(2, '0');
             document.getElementById('hours').innerText = String(hours).padStart(2, '0');
             document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
@@ -324,10 +272,7 @@
         }
         setInterval(updateCountdown, 1000);
         updateCountdown();
-
-        // --- Audio Logic ---
         const bgMusicUrl = audioBaseUrl + "13662_e6c0afaf321aaabf55f4f835eddd1cb3_music_village_lounge_r5.ogg";
-        
         const sfxMap = {
             "boatload.json": "14893_3b5867eb47b29ea17b382fb4e06b1d62_menu_boatload_over_r1.ogg",
             "runner.json": "14835_2584770c7c57b441d09c3c8337f56b03_menu_runner_over.ogg",
@@ -338,8 +283,6 @@
             "jamband.json": "14850_feabe8931f6e614b35ab55f3cc798d75_menu_jamband_over.ogg",
             "snowball.json": "14849_2df7dd9b2f5a60d994fd82332ff906b5_menu_snowball_over.ogg",
             "elfmaker.json": "14891_b8a96bb8ebfa6bae7c1511a3e19fe7b7_menu_elfmaker_over_r3.ogg",
-            // codelab ahora usa lógica especial abajo, pero necesitamos mapear su archivo base si no fuera especial
-            // "codelab.json": "14847_84f9400d4388afa08563874a9ece2788_menu_codelab_over.ogg", 
             "penguindash.json": "14846_a1f27d0f6308ffd06423aeda05d03004_menu_penguindash_over.ogg",
             "wrapbattle.json": "14845_6da885f6b728ff7ed0507ee9558ee49f_menu_wrapbattle_over.ogg",
             "gumball.json": "14844_ced8f6c38fce0f375e0edc05d21d1908_menu_gumball_over.ogg",
@@ -353,13 +296,11 @@
             "buildandbolt.json": "14833_6336433dcd6537d9510b733666671ba6_menu_buildbolt_over.ogg",
             "mercator.json": "14832_8321f995e55977aa5309518f8b71bdaf_menu_mapquiz_over.ogg",
             "santaselfie.json": "14870_b62a69dbcb74af952803cdeab689ac0c_menu_selfie_over.ogg",
-            "windtunnel.json": "14830_2d4caf043407c875cd59c233a3915816_menu_generic_over.ogg" 
+            "windtunnel.json": "14830_2d4caf043407c875cd59c233a3915816_menu_generic_over.ogg"
         };
-
         const bgAudio = new Audio(bgMusicUrl);
         bgAudio.volume = 0.4;
         let isAudioEnabled = false;
-
         const btn = document.getElementById('start-audio-btn');
         btn.addEventListener('click', () => {
             bgAudio.play().then(() => {
@@ -367,7 +308,6 @@
                 btn.classList.add('hidden');
             }).catch(e => console.log("Audio prevent", e));
         });
-
         bgAudio.addEventListener('timeupdate', () => {
             const timeLeft = bgAudio.duration - bgAudio.currentTime;
             if (timeLeft < 2.5 && timeLeft > 0) {
@@ -376,7 +316,6 @@
                 }
             }
         });
-
         bgAudio.addEventListener('ended', () => {
             bgAudio.currentTime = 2.38;
             bgAudio.volume = 0;
@@ -389,60 +328,37 @@
                 }
             }, 100);
         });
-
-        // Ya no necesitamos la variable global currentSfx para parar el audio
-        // let currentSfx = null;
-
         function playHoverSound(filename) {
             if (!isAudioEnabled) return;
-            
-            // LÓGICA DE MULTI-AUDIO: Ya no paramos el sonido anterior.
-            // if (currentSfx) { currentSfx.pause(); ... }  <-- ELIMINADO
-
             let sfxFile;
             let playbackRate = 1.0;
-
-            // Lógica especial para Codelab (usa audio de Codeboogie con pitch)
             if (filename === 'codelab.json') {
                 sfxFile = sfxMap['codeboogie.json'];
-                playbackRate = 1.2; // Más rápido = más pitch (agudo)
+                playbackRate = 1.2;
             } else {
                 sfxFile = sfxMap[filename] || "14830_2d4caf043407c875cd59c233a3915816_menu_generic_over.ogg";
             }
-
             const sound = new Audio(audioBaseUrl + sfxFile);
             sound.volume = 0.6;
             sound.playbackRate = playbackRate;
             sound.play().catch(e => {});
-            
-            // Nota: Al crear una nueva instancia 'new Audio()' cada vez y no guardarla
-            // en una variable global, permitimos que se solapen los sonidos.
         }
-
-        // --- Game Modal Logic ---
         function openGameModal(url) {
             const modal = document.getElementById('game-modal');
             const iframe = document.getElementById('game-iframe');
             const fallbackLink = document.getElementById('fallback-link');
-            
             iframe.src = url;
             fallbackLink.href = url;
             modal.classList.add('active');
-            
-            // Pausar musica de fondo
             if(isAudioEnabled) {
                 bgAudio.pause();
             }
         }
-
         function closeGameModal() {
             const modal = document.getElementById('game-modal');
             const iframe = document.getElementById('game-iframe');
-            
             modal.classList.remove('active');
-            iframe.src = ""; // Stop game execution/audio
-            
-            // Reanudar musica de fondo con fade in
+            iframe.src = "";
             if(isAudioEnabled) {
                 bgAudio.volume = 0;
                 bgAudio.play();
@@ -457,17 +373,14 @@
                 }, 100);
             }
         }
-        
-        // --- Card Generation ---
         const colors = [
-            'bg-card-blue', 
-            'bg-card-green', 
-            'bg-card-red', 
-            'bg-card-yellow', 
-            'bg-card-purple', 
+            'bg-card-blue',
+            'bg-card-green',
+            'bg-card-red',
+            'bg-card-yellow',
+            'bg-card-purple',
             'bg-card-teal'
         ];
-
         const friendlyNames = {
             "santaselfie.json": "Santa Selfie",
             "codeboogie.json": "Code Boogie",
@@ -494,21 +407,15 @@
             "mercator.json": "Map Quiz",
             "windtunnel.json": "Wind Tunnel"
         };
-
         const files = Object.keys(friendlyNames);
         const container = document.getElementById('grid-container');
-
         const nowC = new Date();
-        const currentMonth = nowC.getMonth(); 
+        const currentMonth = nowC.getMonth();
         const currentDay = nowC.getDate();
-        
-        const isDecember = currentMonth === 11; 
-        
+        const isDecember = currentMonth === 11;
         files.forEach((file, index) => {
             const dayNumber = index + 1;
-            
             let isLocked = true;
-            
             if (currentMonth > 11) {
                 isLocked = false;
             } else if (currentMonth === 11) {
@@ -516,22 +423,14 @@
                     isLocked = false;
                 }
             }
-            // TESTING: Uncomment to unlock all
-            // isLocked = false; 
-            
             const animationUrl = `${baseUrl}${file}`;
             const displayName = friendlyNames[file];
             const colorClass = isLocked ? 'bg-card-locked' : colors[index % colors.length];
-            
             const pageName = file.replace('.json', '');
             const targetUrl = `${targetBaseUrl}${pageName}.html`;
-
-            const card = document.createElement('div'); // Always div now, handling click manually
-            
+            const card = document.createElement('div');
             card.className = `${colorClass} aspect-square rounded-3xl relative overflow-hidden ${isLocked ? '' : 'card-hover-effect cursor-pointer group'} select-none shadow-lg block no-underline`;
-            
             let contentHtml = '';
-
             if (isLocked) {
                 contentHtml = `
                     <div class="absolute inset-0 flex flex-col items-center justify-center p-4 z-20 locked-overlay">
@@ -549,60 +448,48 @@
                     <div class="absolute top-3 left-4 z-20">
                         <span class="text-white/80 text-xl font-bold drop-shadow-md border-2 border-white/30 rounded-full w-8 h-8 flex items-center justify-center bg-white/10">${dayNumber}</span>
                     </div>
-                    
                     <div class="absolute inset-0 flex flex-col items-center justify-center p-4 pb-12">
                         <div class="absolute inset-0 flex items-center justify-center text-white/50 text-sm font-medium loading-text z-0">
                             Loading...
                         </div>
-                        
-                        <lottie-player 
-                            src="${animationUrl}" 
-                            background="transparent" 
-                            speed="1" 
-                            style="width: 85%; height: 85%;" 
+                        <lottie-player
+                            src="${animationUrl}"
+                            background="transparent"
+                            speed="1"
+                            style="width: 85%; height: 85%;"
                             class="relative z-10 transition-transform duration-500"
                         ></lottie-player>
                     </div>
-
                     <div class="absolute bottom-0 left-0 right-0 p-4 text-center z-20 bg-gradient-to-t from-black/20 to-transparent">
                         <h3 class="text-white text-xl tracking-wide text-shadow leading-tight">${displayName}</h3>
                     </div>
-                    
                     <div class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30">
                         <div class="bg-white/20 backdrop-blur-sm rounded-full p-2">
                             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                         </div>
                     </div>
                 `;
-                
-                // Click Listener for modal
                 card.addEventListener('click', () => {
                     openGameModal(targetUrl);
                 });
             }
-
             card.innerHTML = contentHtml;
             container.appendChild(card);
-
             if (!isLocked) {
                 const player = card.querySelector('lottie-player');
                 const loader = card.querySelector('.loading-text');
-
                 player.addEventListener('ready', () => {
                     loader.style.display = 'none';
                     player.stop();
                 });
-
                 card.addEventListener('mouseenter', () => {
                     player.setDirection(1);
                     player.setSpeed(2);
                     player.play();
                     playHoverSound(file);
                 });
-
                 card.addEventListener('mouseleave', () => {
-                    // Nota: Ya NO paramos el sonido aqui, como pediste
-                    player.setDirection(-1); 
+                    player.setDirection(-1);
                     player.setSpeed(2);
                     player.play();
                 });
